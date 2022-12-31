@@ -1,4 +1,4 @@
-# Thuc_tap_week_1
+# TTCN-IFD
 - Nhóm thực tập 
 1. Ngô Hoàng Phát
 2. Nguyễn Trọng Thành
@@ -6,11 +6,38 @@
 4. Trần Hải Phước
 6. Trần Khải Hoàn
 7. Phù Quốc Khánh
-# tai khoan khach
+# Customer account
 hoantran1107@gmail.com
 123456
-# tai khoan admin
+# Admin account
 admin@gmail.com
 123456
 # lenh tai lai model
 Scaffold-DbContext 'Server=DESKTOP-DDQN6I1\HOANTRAN;Initial Catalog=dbshop;Trusted_Connection=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+# appsetting.json
+{
+  "ConnectionStrings": { "dbShopBanDo": "Server=XUANDAT\\DATXUAN;Database=dbshop;Integrated Security=true;" },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Information",
+        "System": "Information"
+      }
+    }
+  },
+  "EPPlus": {
+    "ExcelPackage": {
+      "LicenseContext": "Commercial" //The license context used
+    }
+  },
+  "Smtp": {
+    "Host": "smtp.gmail.com",
+    "Port": 465,
+    "FromEmail": "quockhanhphu11@gmail.com",
+    "UserName": "quockhanhphu11@gmail.com",
+    "PassWord": "bwzlrkejdcolvoub"
+  },
+  "ElasticSearch": { "Url": "http://localhost:9200" },
+  "AllowedHosts": "*"
+}
