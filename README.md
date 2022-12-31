@@ -6,15 +6,24 @@
 4. Trần Hải Phước
 6. Trần Khải Hoàn
 7. Phù Quốc Khánh
-# Customer account
+Customer account
+```bash
 hoantran1107@gmail.com
 123456
-# Admin account
+```
+
+Admin account
+```bash
 admin@gmail.com
 123456
-# lenh tai lai model
+```
+
+Reload model
+```bash
 Scaffold-DbContext 'Server=DESKTOP-DDQN6I1\HOANTRAN;Initial Catalog=dbshop;Trusted_Connection=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
-# appsetting.json
+```
+appsetting.json
+```bash
 {
   "ConnectionStrings": { "dbShopBanDo": "Server=XUANDAT\\DATXUAN;Database=dbshop;Integrated Security=true;" },
   "Serilog": {
@@ -41,3 +50,4 @@ Scaffold-DbContext 'Server=DESKTOP-DDQN6I1\HOANTRAN;Initial Catalog=dbshop;Trust
   "ElasticSearch": { "Url": "http://localhost:9200" },
   "AllowedHosts": "*"
 }
+```
