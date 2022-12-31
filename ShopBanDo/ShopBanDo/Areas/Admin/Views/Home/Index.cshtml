@@ -1,0 +1,307 @@
+﻿
+@{ ViewData["Title"] = "Admin DashBroad";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var DailyIncome = ViewBag.Income;
+    var persent = ViewBag.IncomePersent;
+    var date = DateTime.Now;
+    var TodayOrder = ViewBag.TotalOrder;
+    var startdate = ViewBag.Start.ToString("yyyy-MM-dd");
+    var enddate = ViewBag.End.ToString("yyyy-MM-dd");
+    var product = ViewBag.product;
+}
+
+<div class="content-wrapper">
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0">@TodayOrder</h3>
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                        </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Order created</h6>
+                    <h6 class="text-muted font-weight-normal">@date</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0">@ViewBag.TotalCustomer</h3>
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                        </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Total Customer</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0">@DailyIncome</h3>
+                               
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            
+                        </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                    <h6 class="text-muted font-weight-normal">@date</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0">@ViewBag.TotalItem</h3>
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                        </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Total Products</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between">
+                        <h4 class="card-title mb-1">Income Statement</h4>
+                        <p class="text-muted mb-1">Your data status</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <form class="col-12" method="post" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                <div class="col-4">
+                                    <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                        <input class="form-control" type="date" id="start" name="start" value="@startdate">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-4">
+                                    <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                        <input class="form-control" type="date" id="end" name="end" value="@enddate">
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div class="col-12">
+                                    <input type="submit" onclick="return checkday(@startdate,@enddate);" class="btn btn-primary btn-fw" value="Check" />
+                                </div>
+
+                            </form>
+                        </div>
+                        <br />
+                        <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                        <h4 class="card-title">Income chart</h4>
+                        <canvas id="areaChart" style="height:250px"></canvas>
+                    </div>
+                    <h4>Product with low stock (below 10)</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>ProductID</th>
+                                    <th>Product Name</th>
+                                    <th>UnitslnStock</th>
+                                    <th>Price</th>
+                                </tr>
+                                @if (product == null)
+                                {
+                                    <h4>No Product with low stock</h4>
+                                }
+                                @{
+                                    else
+                                    {
+                                        foreach (Product item in product)
+                                        {
+
+                                            <tr>
+                                                <td>@(item.ProductId)</td>
+                                                <td>@item.ProductName</td>
+                                                <td>@item.UnitslnStock</td>
+                                                <td>@item.Price</td>
+                                            </tr>
+                                        }
+                                       
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="~/Adminassets/js/datecheck.js"></script>
+    <script src="~/Adminassets/vendors/chart.js/Chart.min.js"></script>
+    <script>
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        function getListColor(i) {
+            var li = [];
+            for (var j = 0; j < i.length; j++) {
+                li.push(getRandomColor());
+            }
+            return li;
+        }
+
+    </script>
+    <script>
+        $(function () {
+            /* ChartJS
+            * -------
+            * Data and config for chartjs
+            */
+            'use strict';
+            var areaData = {
+                labels:@Html.Raw(ViewBag.C1name),
+                datasets: [{
+                    label: '# Total Income',
+                    lineTension: 0.3,
+                backgroundColor: "rgba(2,117,216,0.2)",
+                borderColor: "rgba(2,117,216,1)",
+                pointRadius: 5,
+                pointBackgroundColor: "rgba(2,117,216,1)",
+                pointBorderColor: "rgba(255,255,255,0.8)",
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                pointHitRadius: 20,
+                pointBorderWidth: 2,
+                data: @ViewBag.C1sl,
+                    fill: true, // 3: no fill
+                }]
+            };
+
+            var areaOptions = {
+                plugins: {
+                    filler: {
+                        propagate: true
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            color: "rgba(204, 204, 204,0.1)"
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            color: "rgba(204, 204, 204,0.1)"
+                        }
+                    }]
+                }
+            }
+
+            var multiAreaData = {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: 'Facebook',
+                    data: [8, 11, 13, 15, 12, 13, 16, 15, 13, 19, 11, 14],
+                    borderColor: ['rgba(255, 99, 132, 0.5)'],
+                    backgroundColor: ['rgba(255, 99, 132, 0.5)'],
+                    borderWidth: 1,
+                    fill: true
+                },
+                {
+                    label: 'Twitter',
+                    data: [7, 17, 12, 16, 14, 18, 16, 12, 15, 11, 13, 9],
+                    borderColor: ['rgba(54, 162, 235, 0.5)'],
+                    backgroundColor: ['rgba(54, 162, 235, 0.5)'],
+                    borderWidth: 1,
+                    fill: true
+                },
+                {
+                    label: 'Linkedin',
+                    data: [6, 14, 16, 20, 12, 18, 15, 12, 17, 19, 15, 11],
+                    borderColor: ['rgba(255, 206, 86, 0.5)'],
+                    backgroundColor: ['rgba(255, 206, 86, 0.5)'],
+                    borderWidth: 1,
+                    fill: true
+                }
+                ]
+            };
+
+            var multiAreaOptions = {
+                plugins: {
+                    filler: {
+                        propagate: true
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            }
+
+
+            // Get context with jQuery - using jQuery's .get() method.
+
+
+            if ($("#areachart-multi").length) {
+                var multiAreaCanvas = $("#areachart-multi").get(0).getContext("2d");
+                var multiAreaChart = new Chart(multiAreaCanvas, {
+                    type: 'line',
+                    data: multiAreaData,
+                    options: multiAreaOptions
+                });
+            }
+
+            if ($("#areaChart").length) {
+                var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+                var areaChart = new Chart(areaChartCanvas, {
+                    type: 'line',
+                    data: areaData,
+                    options: areaOptions
+                });
+            }
+        });
+    </script>
+}

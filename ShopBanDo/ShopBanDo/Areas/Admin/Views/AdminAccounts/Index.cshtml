@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ShopBanDo.Models.Account>
+
+@{
+    ViewData["Title"] = "Manage account";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<p></p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item">List of administrator accounts</li>
+    </ol>
+</nav>
+        <div class="row m-b-30">
+            <div class="col-lg-8">
+                <a class="btn btn-primary" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span>Create new account</span></a>
+            </div>
+            <div class="col-lg-4 text-right">
+
+            </div>
+        </div>
+<br />
+        <div class="row m-b-30">
+          
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Full name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Phone number
+                    </th>
+                    <th>
+                        Last login
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountId)
+                            </td>
+                            <td>
+                                @item.Fullname
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Active)
+                                    {
+                                        <label class="badge badge-success">Active</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="badge badge-danger">Block</label>
+                                    }
+                                }
+
+                            </td>
+                            <td>
+                                @item.Phone
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastLogin)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Role.RoleName)
+                            </td>
+                            <td>
+                                @*Tai khoan co rol admin thi chi co the tu huy chinh minh, ko the xoa
+                                    tai khoan khac.Chi co nguoi dung co role SuperAdmin la toan quyen xoa tat ca cac tai khoan*@
+                            @if (item.AccountId == Convert.ToInt32(User.FindFirst("UserId").Value)||User.HasClaim("Roles","4"))
+                            {
+                                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.AccountId">Edit</a>
+                                <a class="btn btn-light btn-sm" asp-action="Details" asp-route-id="@item.AccountId">Detail</a>
+
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.AccountId">Delete</a>
+                            }
+                    </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>

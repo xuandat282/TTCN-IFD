@@ -1,0 +1,38 @@
+﻿@model ShopBanDo.Models.Role
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<p></p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">List of accesss roles</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Delete access role</li>
+    </ol>
+</nav>
+<h3>Confirm deleting access role?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Role's name
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+        <dt class = "col-sm-2">
+           Description
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="RoleId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> 
+        <a asp-action="Index">Back to list</a>
+    </form>
+</div>

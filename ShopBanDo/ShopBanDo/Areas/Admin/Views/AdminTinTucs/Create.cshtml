@@ -1,0 +1,125 @@
+﻿@model ShopBanDo.Models.TinTuc
+
+@{
+    ViewData["Title"] = "Add news";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles{
+    <link href="~/Adminassets/summernote/summernote-bs4.css" rel="stylesheet" />
+    <link href="~/Adminassets/summernote/summernote.css" rel="stylesheet" />
+}
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a asp-area="Admin" asp-controller="AdminTinTucs" asp-action="Index" class="breadcrumb-item">List of news</a>
+            <span class="breadcrumb-item active">Add news</span>
+        </nav>
+    </div>
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label>News' name</label>
+                    <input type="text" class="form-control" asp-for="Title" placeholder="News' name" required>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Published" /> Status
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Tilte</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MetaDesc" class="control-label"></label>
+                    <input asp-for="MetaDesc" class="form-control" />
+                    <span asp-validation-for="MetaDesc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MetaKey" class="control-label"></label>
+                    <input asp-for="MetaKey" class="form-control" />
+                    <span asp-validation-for="MetaKey" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tags" class="control-label"></label>
+                    <input asp-for="Tags" class="form-control" />
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Profile picture</label>
+                    <input type="file" name="fThumb" asp-for="Thumb" class="form-control-file">
+                    <span asp-validation-for="Thumb" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Published" /> @Html.DisplayNameFor(model => model.Published)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsNewfeed" /> News
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsHot" /> @Html.DisplayNameFor(model => model.IsHot)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tags" class="control-label"></label>
+                    <input asp-for="Tags" class="form-control" />
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>
+              
+                <div class="form-group">
+                    <label asp-for="Views" class="control-label"></label>
+                    <input asp-for="Views" class="form-control" />
+                    <span asp-validation-for="Views" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+
+                    <label for="exampleTextarea1">News' content</label>
+                    <textarea class="summernote" asp-for="Contents"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="reset" class="btn btn-dark">Reset</button>
+                </div>
+            </form>
+                </div>
+            </div>
+            </div>
+
+            <div>
+                <a asp-action="Index">Back to list</a>
+            </div>
+            @section Scripts{
+                <script src="~/Adminassets/js/select2.js"></script>
+                <script src="~/Adminassets/vendors/select2/select2.min.js"></script>
+                <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
+                <script src="~/Adminassets/summernote/summernote-bs4.js"></script>
+                <script>
+                    jQuery(document).ready(function () {
+                        $('.summernote').summernote({
+                            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+                            styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5'],
+                            height: 200,
+                            minHeight: null,
+                            maxHeight: null,
+                            focus: true
+                        });
+                    });
+                </script>
+            }

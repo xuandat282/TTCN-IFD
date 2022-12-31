@@ -1,0 +1,177 @@
+﻿@model ShopBanDo.ModelView.MuaHangVM
+@{
+    ViewData["Title"] = "Check out";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ShopBanDo.ModelView.CartItem> Carts = ViewBag.GioHang;
+}
+@section Styles{
+    <style type="text/css">
+        .nice-select .list {
+            border-radius: 0px;
+            overflow-y: auto;
+            overflow: hidden;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        .nice-select .option:hover, .nice-select .option.focus, .nice-select .option.selected.focus {
+            color: red;
+            background: none;
+        }
+    </style>
+}
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shop</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home page</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<main class="main-content">
+    <div class="checkout-area section-space-y-axis-100">
+        <div class="container">
+            <form asp-controller="Checkout" asp-action="Index" method="post">
+                <input hidden asp-for="CustomerId" />
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+
+                        <div class="checkbox-form">
+                            <h3>ORDER DETAIL</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Full name</label>
+                                        <input asp-for="FullName" placeholder="Full name" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Phone number <span class="required">*</span></label>
+                                        <input asp-for="Phone" placeholder="Phone number" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Receiving Address <span class="required">*</span></label>
+                                        <input asp-for="Address" placeholder="Receiving Address" type="text">
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="your-order">
+                            <h3>ORDER DETAIL</h3>
+                            <div class="your-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart-product-name">PRODUCT</th>
+                                            <th class="cart-product-total">TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Carts.Count() > 0)
+                                        {
+                                            foreach (var item in Carts)
+                                            {
+                                                <tr class="cart_item">
+                                                    <td class="cart-product-name">
+                                                        @item.product.ProductName<strong class="product-quantity">
+                                                            × @item.amount
+                                                        </strong>
+                                                    </td>
+                                                    <td class="cart-product-total"><span class="amount">@item.TotalMoney.ToString("#,##0") VNĐ</span></td>
+                                                </tr>
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="order-total">
+                                            <th>ORDER TOTAL</th>
+                                            <td><strong><span class="amount">@Carts.Sum(x => x.TotalMoney).ToString("#,##0") VNĐ</span></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <h5 style="color:red">Select your payment method</h5>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-1">
+                                                <h5 class="panel-title">
+                                                    <a href="javascript:void(0)" class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
+                                                        Cash on delivery (COD)
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                                                <div class="card-body">
+                                                    <p>
+                                                        The customer will pay after receiving the package
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-2">
+                                                <h5 class="panel-title">
+                                                    <a href="javascript:void(0)" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false">
+                                                        Transfer via bank
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                                                <div class="card-body">
+                                                    <p>
+                                                        Bank account details
+                                                    </p>
+                                                    <p>Account owner: xxxxx</p>
+                                                    <p>Account number: xxxxx - Bank xxxxx</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-3">
+                                                <h5 class="panel-title">
+                                                    <a href="javascript:void(0)" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false">
+                                                        Transfer via MOMO
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                                                <div class="card-body">
+                                                    <p>MOMO details</p>
+                                                    <p>Account owner: xxxxxxx</p>
+                                                    <p>Phone number: xxxxxx</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-button-payment">
+                                        <input value="CONFIRM THE ORDER" type="submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</main>

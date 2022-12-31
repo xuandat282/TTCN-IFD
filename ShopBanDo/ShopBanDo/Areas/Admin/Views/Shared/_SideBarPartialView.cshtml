@@ -1,0 +1,146 @@
+﻿
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+        <a class="sidebar-brand brand-logo text-decoration-none text-light" asp-area="Admin" asp-controller="Home" asp-action="Index">SHOP ADMIN</a>
+        <a class="sidebar-brand brand-logo-mini text-decoration-none text-light" asp-area="Admin" asp-controller="Home" asp-action="Index">S</a>
+    </div>
+    <ul class="nav">
+        <li class="nav-item profile">
+            <div class="profile-desc">
+                <div class="profile-pic">
+                    <div class="count-indicator">
+                        <img class="img-xs rounded-circle " src="@Url.Content("~/images/"+User.FindFirst("ImagePath").Value.ToString()+"/"+User.FindFirst("ImageName").Value.ToString())" alt="">
+                        <span class="count bg-success"></span>
+                    </div>
+                    <div class="profile-name">
+                        <h5 class="mb-0 font-weight-normal">@User.Identity.Name</h5>
+                    </div>
+                </div>
+                <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+                <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+                    @*<a href="#" class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <div class="preview-icon bg-dark rounded-circle">
+                                <i class="mdi mdi-settings text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="preview-item-content">
+                            <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                        </div>
+                    </a>*@
+                    <div class="dropdown-divider"></div>
+                    <a asp-area="Admin" asp-controller="AdminChangePassword" asp-action="Edit" asp-route-id="@Convert.ToInt32(User.FindFirst("UserId").Value.ToString())" class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <div class="preview-icon bg-dark rounded-circle">
+                                <i class="mdi mdi-onepassword  text-info"></i>
+                            </div>
+                        </div>
+                        <div class="preview-item-content">
+                            <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item nav-category">
+            <span class="nav-link">Navigation</span>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" aria-expanded="false" aria-controls="ui-basic" asp-area="admin" asp-controller="Home" asp-action="Index">
+                <span class="menu-icon">
+                    <i class="mdi mdi-speedometer"></i>
+                </span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        @*Quản lý đơn hàng*@
+        <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-2" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                    <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Manage orders</span>
+            </a>
+            <div class="collapse" id="ui-basic-2">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminOrders" asp-action="Index">Customer Order</a></li>
+                </ul>
+            </div>
+        </li>
+        @*Quản lý sản phẩm*@
+        <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-3" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                    <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Manage products</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-3">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">List of products</a></li>
+                </ul>
+            </div>
+        </li>
+        @*Quản lý khách hàng*@
+        @if (User.HasClaim("Roles", "1")||User.HasClaim("Roles","4"))
+        {
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic-4" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                    <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Manage customers</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-4">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index">List of customers</a></li>
+                  
+                </ul>
+            </div>
+        </li>
+        }
+        @if (User.HasClaim("Roles", "1")||User.HasClaim("Roles","4"))
+        {
+            @*Quản lý hệ thống*@
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic-6" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                    <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Manage system</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-6">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">Manage accounts</a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Manage access roles</a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Manage categories</a></li>
+                </ul>
+            </div>
+        </li>
+        }
+        @*Quản lý tin tức*@
+        <li class="nav-item menu-items">
+            <a class="nav-link" aria-expanded="false" aria-controls="ui-basic" asp-area="Admin" asp-controller="AdminTinTucs" asp-action="Index">
+                <span class="menu-icon">
+                    <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Manage news</span>
+                
+            </a>
+        </li>
+        @*Quản lý Pages*@
+        <li class="nav-item menu-items">
+            <a class="nav-link" asp-area="Admin" asp-controller="AdminPages" asp-action="Index" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                    <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Manage pages</span>
+               
+            </a>
+         
+        </li>
+    </ul>
+</nav>
